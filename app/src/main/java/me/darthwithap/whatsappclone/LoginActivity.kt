@@ -18,7 +18,7 @@ import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity(), NumVerifyClient.VolleyCallback {
     companion object {
-        private const val PHONE_NUMBER = "1"
+        private const val PHONE_NUMBER = "phoneNumber"
         private const val CREDENTIAL_PICKER_REQUEST = 1
     }
 
@@ -26,19 +26,22 @@ class LoginActivity : AppCompatActivity(), NumVerifyClient.VolleyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        etPhoneNumber.addTextChangedListener {
+            btnContinue.isEnabled = !it.isNullOrBlank() && it.length == 10
+        }
+
         Handler(Looper.getMainLooper()).postDelayed({
             phoneSelection()
         }, 700)
 
-        etPhoneNumber.addTextChangedListener {
-            btnContinue.isEnabled = !it.isNullOrEmpty() || it?.length == 10
-        }
-
         ccp.registerPhoneNumberTextView(etPhoneNumber)
 
         btnContinue.setOnClickListener {
-            pbCheckingPhoneNumber.visibility = View.VISIBLE
-            checkPhoneValidity(ccp.number)
+            if (ccp.number != null) {
+                pbCheckingPhoneNumber.visibility = View.VISIBLE
+                checkPhoneValidity(ccp.number)
+            }
+            else Toast.makeText(this, "Enter a number to continue", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -81,14 +84,20 @@ class LoginActivity : AppCompatActivity(), NumVerifyClient.VolleyCallback {
     }
 
     override fun onSuccess(result: Boolean) {
-        pbCheckingPhoneNumber.visibility = View.GONE
-        if (ccp.isValid && result) {
-            startActivity(
-                Intent(this, OtpActivity::class.java)
-                    .putExtra(PHONE_NUMBER, ccp.number)
-            )
-        } else
-            Toast.makeText(this, "Invalid number!", Toast.LENGTH_SHORT).show()
+        Handler(Looper.getMainLooper()).postDelayed(
+            {
+                pbCheckingPhoneNumber.visibility = View.GONE
+                if (ccp.isValid && result) {
+                    startActivity(
+                        Intent(this, OtpActivity::class.java)
+                            .putExtra(PHONE_NUMBER, ccp.number)
+                    )
+                    finish()
+                } else
+                    Toast.makeText(this, "Invalid number!", Toast.LENGTH_SHORT).show()
+            },
+            500
+        )
     }
 
 }

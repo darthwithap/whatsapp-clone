@@ -1,21 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
     tools:context=".OtpActivity">
+
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/whatsapp_cookie"
+        app:tint="@color/dark_age_blue" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OTP ACTIVITY"
+        android:layout_marginTop="32dp"
+        android:text="@string/verification"
         android:textColor="@color/black"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="26sp"
+        app:fontFamily="@font/raleway_black" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvEnterOtpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingEnd="4dp"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        android:textColor="@color/regular_gray"
+        app:fontFamily="@font/raleway_semi_bold"
+        tools:ignore="RtlSymmetry"
+        tools:text="@string/enter_otp_sent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etNum1"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_black"
+            tools:ignore="LabelFor"
+            tools:text="1" />
+
+        <EditText
+            android:id="@+id/etNum2"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_black"
+            tools:ignore="LabelFor"
+            tools:text="2" />
+
+        <EditText
+            android:id="@+id/etNum3"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_black"
+            tools:ignore="LabelFor"
+            tools:text="3" />
+
+        <EditText
+            android:id="@+id/etNum4"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_black"
+            tools:ignore="LabelFor"
+            tools:text="4" />
+
+        <EditText
+            android:id="@+id/etNum5"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_black"
+            tools:ignore="LabelFor"
+            tools:text="5" />
+
+        <EditText
+            android:id="@+id/etNum6"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_black"
+            tools:ignore="LabelFor"
+            tools:text="6" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tvResendTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingEnd="4dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+            android:textColor="@color/regular_gray"
+            app:fontFamily="@font/raleway_semi_bold"
+            tools:ignore="RtlSymmetry"
+            tools:text="@string/resend_otp_in" />
+
+        <ProgressBar
+            android:id="@+id/pbDetectingOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/dark_age_blue"
+            android:visibility="visible" />
+
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="64dp"
+        android:backgroundTint="@color/dark_age_blue"
+        android:letterSpacing="0.05"
+        android:paddingHorizontal="108dp"
+        android:paddingVertical="16dp"
+        android:text="@string/continue_text"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:cornerRadius="40dp" />
+
+</LinearLayout>
