@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-class LoginActivity : AppCompatActivity(), NumVerifyClient.VolleyCallback {
+class LoginActivity : BaseActivity(), NumVerifyClient.VolleyCallback {
     companion object {
         private const val PHONE_NUMBER = "phoneNumber"
         private const val CREDENTIAL_PICKER_REQUEST = 1
@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity(), NumVerifyClient.VolleyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adjustFontScale(resources.configuration)
         setContentView(R.layout.activity_login)
 
         etPhoneNumber.addTextChangedListener {

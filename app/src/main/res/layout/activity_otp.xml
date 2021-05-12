@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llParent"
+    android:id="@+id/llParentOtp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -53,7 +53,7 @@
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
             android:inputType="number"
-            android:maxLength="1"
+            android:maxLength="6"
             android:textSize="24sp"
             android:textStyle="bold"
             app:fontFamily="@font/raleway_black"
@@ -174,19 +174,8 @@
 
     </FrameLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnContinue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="64dp"
-        android:backgroundTint="@color/dark_age_blue"
-        android:letterSpacing="0.05"
-        android:paddingHorizontal="108dp"
-        android:paddingVertical="16dp"
-        android:text="@string/continue_text"
-        android:textAllCaps="false"
-        android:textSize="16sp"
-        app:cornerRadius="40dp" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="72dp"/>
 
 </LinearLayout>

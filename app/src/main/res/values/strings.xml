@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">WhatsAppClone</string>
     <string name="welcome_to_cookie_whatsapp">Welcome to Cookie Chat</string>
+    <string name="here_we_go">Here we go!</string>
     <string name="please_enter_your_mobile_number">Please enter your mobile number to login or register, so we can send you confirmation code.</string>
+    <string name="please_enter_name_photo">Please provide your name and an optional profile photo.</string>
     <string name="by_continuing">By continuing, you are indicating that you agree to the</string>
+    <string name="sms_data_charges">SMS data charges may apply. Also, take note of</string>
     <string name="phone_number">Phone number</string>
+    <string name="your_name">Name</string>
     <string name="privacy_policy_and_terms">Privacy Policy and Terms.</string>
     <string name="continue_text">Continue</string>
+    <string name="finish_text">Finish</string>
     <string name="verification">Verification</string>
     <string name="enter_otp_sent">Enter OTP sent to %s in-case we fail to auto-detect the code</string>
     <string name="resend_otp_in">Resend OTP %s %s</string>

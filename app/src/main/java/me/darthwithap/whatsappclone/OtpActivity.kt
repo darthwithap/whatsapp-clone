@@ -1,9 +1,9 @@
 package me.darthwithap.whatsappclone
 
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -19,6 +19,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
@@ -28,11 +29,12 @@ import kotlinx.android.synthetic.main.activity_otp.*
 import java.lang.StringBuilder
 import java.util.concurrent.TimeUnit
 
-class OtpActivity : AppCompatActivity() {
+class OtpActivity : BaseActivity() {
     private lateinit var exitSnackbar: Snackbar
     private lateinit var phNo: String
-    private var otpCooldownTime = 10
+    private var otpCooldownTime = 60
     private var isCoolDown = true
+    private var clipboardText = ""
     private lateinit var etList: List<EditText>
     private lateinit var auth: FirebaseAuth
     private lateinit var credential: PhoneAuthCredential
@@ -46,23 +48,16 @@ class OtpActivity : AppCompatActivity() {
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adjustFontScale(resources.configuration)
         setContentView(R.layout.activity_otp)
 
-        phNo = intent.getStringExtra("phoneNumber").toString()
+        phNo = intent.getStringExtra(PHONE_NUMBER).toString()
         //auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
         initViews()
         setResetTimeSpan("in", timerToText(otpCooldownTime))
         startTimer()
         verify()
-
-        btnContinue.setOnClickListener {
-            getCodeEntered()
-            if (codeEntered.length == 6) {
-                verifyPhoneNumberWithCode(storedVerificationId, codeEntered)
-            } else
-                Toast.makeText(this, "Invalid otp", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun getCodeEntered() {
@@ -79,16 +74,16 @@ class OtpActivity : AppCompatActivity() {
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(cred: PhoneAuthCredential) {
                 Log.d(TAG, "onVerificationCompleted: $cred")
-                Toast.makeText(this@OtpActivity, "$cred and will sign you in.", Toast.LENGTH_SHORT)
-                    .show()
                 val code = cred.smsCode
-                if (code != null) {
+                if (!code.isNullOrBlank()) {
                     Log.d(TAG, "onVerificationCompleted: $code")
+                    fillCodeInEditTexts(code)
                     verifyPhoneNumberWithCode(storedVerificationId, code)
                 } else signInWithPhoneAuthCredential(cred)
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
+                pbDetectingOtp.visibility = View.GONE
                 Log.d(TAG, "onVerificationFailed: ${e.localizedMessage}")
                 Toast.makeText(this@OtpActivity, "${e.message}", Toast.LENGTH_SHORT).show()
             }
@@ -106,7 +101,8 @@ class OtpActivity : AppCompatActivity() {
                     pbDetectingOtp.visibility = View.GONE
                     etNum1.requestFocus()
                     imm.showSoftInput(etNum1, InputMethodManager.SHOW_IMPLICIT)
-                }, 250)
+                    tryFetchClipboardOtp()
+                }, 500)
             }
         }
 
@@ -114,6 +110,20 @@ class OtpActivity : AppCompatActivity() {
         startPhoneNumberVerification(phNo)
     }
     //[END verify]
+
+    //[START try_fetch_clipboard_otp]
+    private fun tryFetchClipboardOtp() {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+        if (clipboard.hasPrimaryClip()) {
+            val item = clipboard.primaryClip?.getItemAt(0)
+            val pasteCode = item?.text.toString()
+            Log.d(TAG, "tryFetchClipboardOtp: $pasteCode")
+            if (pasteCode.isDigitsOnly() && pasteCode.length == 6) clipboardText =
+                item?.text.toString()
+        }
+    }
+    //[END try_fetch_clipboard_otp]
 
     //[START resend_verification_code]
     private fun resendVerificationCode(
@@ -135,7 +145,7 @@ class OtpActivity : AppCompatActivity() {
 
     //[START verify_phone_number_with_code]
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
-        //pbDetectingOtp.visibility = View.VISIBLE
+        pbDetectingOtp.visibility = View.VISIBLE
         credential = PhoneAuthProvider.getCredential(verificationId!!, code)
         signInWithPhoneAuthCredential(credential)
     }
@@ -162,6 +172,9 @@ class OtpActivity : AppCompatActivity() {
                     //INTENT TO MAIN CHAT SCREEN
                     imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
                     Toast.makeText(this, "signIn Success!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, SignUpActivity::class.java)
+                        .putExtra(PHONE_NUMBER, phNo))
+                    finish()
                     val user = task.result?.user
                 } else {
                     pbDetectingOtp.visibility = View.GONE
@@ -195,7 +208,7 @@ class OtpActivity : AppCompatActivity() {
     //[START init_views]
     private fun initViews() {
         exitSnackbar =
-            Snackbar.make(llParent, "Please press back again to exit.", Snackbar.LENGTH_SHORT)
+            Snackbar.make(llParentOtp, "Please press back again to exit.", Snackbar.LENGTH_SHORT)
 
         //imm
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -315,6 +328,7 @@ class OtpActivity : AppCompatActivity() {
         TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             val text = s.toString()
+            Log.d(TAG, "afterTextChanged: ${text.length}")
             when (currentView.id) {
                 R.id.etNum1 -> if (text.length == 1) nextView?.requestFocus()
                 R.id.etNum2 -> if (text.length == 1) nextView?.requestFocus()
@@ -328,13 +342,24 @@ class OtpActivity : AppCompatActivity() {
                 imm.hideSoftInputFromWindow(currentView.windowToken, 0)
                 verifyPhoneNumberWithCode(storedVerificationId, codeEntered)
             }
-
         }
 
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            Log.d(TAG, "beforeTextChanged: $after")
+            if (after > 1) {
+                fillCodeInEditTexts(clipboardText)
+            }
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            Log.d(TAG, "onTextChanged: s:$s start:$start before:$before count:$count")
+        }
     }
     //[END OtpTextWatcher CLASS]
+
+    private fun fillCodeInEditTexts(text: String) {
+        for (i in (0..5)) etList[i].setText(text[i].toString())
+    }
 
     override fun onBackPressed() {
         if (exitSnackbar.isShown) {
@@ -351,5 +376,6 @@ class OtpActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "OtpActivity"
+        private const val PHONE_NUMBER = "phoneNumber"
     }
 }
