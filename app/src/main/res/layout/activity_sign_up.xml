@@ -105,11 +105,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/dark_age_blue"
+        android:backgroundTint="@color/light_green"
         android:letterSpacing="0.05"
         android:paddingHorizontal="108dp"
         android:paddingVertical="16dp"
         android:text="@string/finish_text"
+        android:textStyle="bold"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:cornerRadius="40dp" />

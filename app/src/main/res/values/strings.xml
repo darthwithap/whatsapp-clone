@@ -18,4 +18,5 @@
     <string name="chats">Chats</string>
     <string name="calls">Calls</string>
     <string name="online_dot">●</string>
+    <string name="archived_chats">Archived Chats</string>
 </resources>

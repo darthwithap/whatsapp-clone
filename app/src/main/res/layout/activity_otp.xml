@@ -14,7 +14,7 @@
         android:layout_height="96dp"
         android:layout_marginTop="32dp"
         android:src="@drawable/whatsapp_cookie"
-        app:tint="@color/dark_age_blue" />
+        app:tint="@color/bright_green" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:indeterminateTint="@color/dark_age_blue"
+            android:indeterminateTint="@color/bright_green"
             android:visibility="visible" />
 
     </FrameLayout>
