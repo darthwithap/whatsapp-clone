@@ -1,4 +1,4 @@
-package me.darthwithap.whatsappclone
+package me.darthwithap.whatsappclone.utils
 
 import android.content.Context
 import com.android.volley.Request

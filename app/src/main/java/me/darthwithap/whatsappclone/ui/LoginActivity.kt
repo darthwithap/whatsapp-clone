@@ -1,20 +1,19 @@
-package me.darthwithap.whatsappclone
+package me.darthwithap.whatsappclone.ui
 
 import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.google.android.gms.auth.api.credentials.*
 import kotlinx.android.synthetic.main.activity_login.*
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import me.darthwithap.whatsappclone.BaseActivity
+import me.darthwithap.whatsappclone.utils.NumVerifyClient
+import me.darthwithap.whatsappclone.R
 
 class LoginActivity : BaseActivity(), NumVerifyClient.VolleyCallback {
     companion object {

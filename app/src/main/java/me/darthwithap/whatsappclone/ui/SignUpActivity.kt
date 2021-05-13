@@ -1,4 +1,4 @@
-package me.darthwithap.whatsappclone
+package me.darthwithap.whatsappclone.ui
 
 import android.app.Activity
 import android.content.Context
@@ -20,6 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import me.darthwithap.whatsappclone.BaseActivity
+import me.darthwithap.whatsappclone.R
+import me.darthwithap.whatsappclone.models.User
 
 
 class SignUpActivity : BaseActivity() {
@@ -116,6 +119,7 @@ class SignUpActivity : BaseActivity() {
                 firestoreDatabase.document(firebaseAuth.uid!!).set(user)
                     .addOnCompleteListener {
                         startActivity(Intent(this, MainActivity::class.java))
+                        finish()
                     }.addOnFailureListener {
                         Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
                         pbUploadingToFirebase.visibility = View.GONE
@@ -151,12 +155,12 @@ class SignUpActivity : BaseActivity() {
                     firestoreDatabase.document(firebaseAuth.uid!!).set(user)
                         .addOnCompleteListener {
                             startActivity(Intent(this, MainActivity::class.java))
+                            finish()
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
                             Log.d(TAG, "uploadImageToFirebase: ${it.localizedMessage}")
                             pbUploadingToFirebase.visibility = View.GONE
-                            //REMOVE IMAGE FROM STORAGE
                             profileImageRef.delete()
                         }
                 }

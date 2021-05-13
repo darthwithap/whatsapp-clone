@@ -1,4 +1,4 @@
-package me.darthwithap.whatsappclone
+package me.darthwithap.whatsappclone.ui
 
 import android.content.ClipboardManager
 import android.content.Context
@@ -24,8 +24,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_otp.*
+import me.darthwithap.whatsappclone.BaseActivity
+import me.darthwithap.whatsappclone.R
 import java.lang.StringBuilder
 import java.util.concurrent.TimeUnit
 
@@ -43,6 +46,9 @@ class OtpActivity : BaseActivity() {
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private var storedVerificationId: String? = ""
     private var codeEntered = ""
+    private val firestoreDatabase by lazy {
+        FirebaseFirestore.getInstance().collection("cookie-chat-users")
+    }
     private lateinit var countdownTimer: CountDownTimer
     private lateinit var imm: InputMethodManager
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
@@ -73,10 +79,8 @@ class OtpActivity : BaseActivity() {
         //Initialize phone_auth_callbacks
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(cred: PhoneAuthCredential) {
-                Log.d(TAG, "onVerificationCompleted: $cred")
                 val code = cred.smsCode
                 if (!code.isNullOrBlank()) {
-                    Log.d(TAG, "onVerificationCompleted: $code")
                     fillCodeInEditTexts(code)
                     verifyPhoneNumberWithCode(storedVerificationId, code)
                 } else signInWithPhoneAuthCredential(cred)
@@ -84,7 +88,6 @@ class OtpActivity : BaseActivity() {
 
             override fun onVerificationFailed(e: FirebaseException) {
                 pbDetectingOtp.visibility = View.GONE
-                Log.d(TAG, "onVerificationFailed: ${e.localizedMessage}")
                 Toast.makeText(this@OtpActivity, "${e.message}", Toast.LENGTH_SHORT).show()
             }
 
@@ -94,7 +97,6 @@ class OtpActivity : BaseActivity() {
             ) {
                 storedVerificationId = verificationId
                 resendToken = token
-                Log.d(TAG, "onCodeSent: s - $verificationId and t - $token")
                 Toast.makeText(this@OtpActivity, "Code has been sent", Toast.LENGTH_SHORT).show()
                 //GET FOCUS ON EDIT TEXTS
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -118,7 +120,6 @@ class OtpActivity : BaseActivity() {
         if (clipboard.hasPrimaryClip()) {
             val item = clipboard.primaryClip?.getItemAt(0)
             val pasteCode = item?.text.toString()
-            Log.d(TAG, "tryFetchClipboardOtp: $pasteCode")
             if (pasteCode.isDigitsOnly() && pasteCode.length == 6) clipboardText =
                 item?.text.toString()
         }
@@ -146,8 +147,11 @@ class OtpActivity : BaseActivity() {
     //[START verify_phone_number_with_code]
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         pbDetectingOtp.visibility = View.VISIBLE
-        credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-        signInWithPhoneAuthCredential(credential)
+        if (verificationId != null) {
+            credential = PhoneAuthProvider.getCredential(verificationId, code)
+            signInWithPhoneAuthCredential(credential)
+        } else Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show()
+
     }
     //[END verify_phone_number_with_code]
 
@@ -171,18 +175,26 @@ class OtpActivity : BaseActivity() {
                     pbDetectingOtp.visibility = View.GONE
                     //INTENT TO MAIN CHAT SCREEN
                     imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-                    Toast.makeText(this, "signIn Success!", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, SignUpActivity::class.java)
-                        .putExtra(PHONE_NUMBER, phNo))
-                    finish()
-                    val user = task.result?.user
+                    val uidRef = auth.currentUser?.uid?.let { firestoreDatabase.document(it) }
+
+                    uidRef?.get()?.addOnSuccessListener {
+                        if (it.exists()) {
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        } else {
+                            startActivity(
+                                Intent(this, SignUpActivity::class.java)
+                                    .putExtra(PHONE_NUMBER, phNo)
+                            )
+                            finish()
+                        }
+                    }
                 } else {
                     pbDetectingOtp.visibility = View.GONE
                     Toast.makeText(this, "signIn Failure", Toast.LENGTH_SHORT).show()
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
                         Toast.makeText(this, "Incorrect code entered", Toast.LENGTH_SHORT).show()
                     }
-                    //UPDATE UI
                 }
             }
     }

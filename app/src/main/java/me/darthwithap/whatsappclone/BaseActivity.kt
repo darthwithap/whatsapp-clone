@@ -7,12 +7,7 @@ import android.util.Log
 import android.view.WindowManager
 
 open class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     fun adjustFontScale(configuration: Configuration) {
-        Log.d(Companion.TAG, "adjustFontScale: ${configuration.fontScale}")
         if (configuration.fontScale > 1.30f) configuration.fontScale = 1.30f
         else configuration.fontScale = 1.00f
 
@@ -21,9 +16,5 @@ open class BaseActivity : AppCompatActivity() {
         wm.defaultDisplay.getMetrics(metrics)
         metrics.scaledDensity = configuration.fontScale * metrics.density
         baseContext.resources.updateConfiguration(configuration, metrics)
-    }
-
-    companion object {
-        private const val TAG = "BaseActivity"
     }
 }

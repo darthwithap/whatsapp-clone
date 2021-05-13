@@ -1,4 +1,4 @@
-package me.darthwithap.whatsappclone
+package me.darthwithap.whatsappclone.models
 
 data class User(
     val uid: String,
