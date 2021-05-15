@@ -16,7 +16,7 @@
     <string name="resend_otp_in">Resend OTP %s %s</string>
     <string name="status">Status</string>
     <string name="chats">Chats</string>
-    <string name="calls">Calls</string>
+    <string name="users">Users</string>
     <string name="online_dot">●</string>
     <string name="archived_chats">Archived Chats</string>
 </resources>

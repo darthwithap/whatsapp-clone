@@ -2,9 +2,9 @@ package me.darthwithap.whatsappclone.adapters
 
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import me.darthwithap.whatsappclone.fragments.CallsFragment
 import me.darthwithap.whatsappclone.fragments.ChatsFragment
 import me.darthwithap.whatsappclone.fragments.StatusFragment
+import me.darthwithap.whatsappclone.fragments.UsersFragment
 
 class TabWiseSlideAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
@@ -14,7 +14,7 @@ class TabWiseSlideAdapter(fragmentActivity: FragmentActivity) :
         when (position) {
             0 -> StatusFragment()
             1 -> ChatsFragment()
-            else -> CallsFragment()
+            else -> UsersFragment()
         }
 
     companion object {
