@@ -15,10 +15,13 @@ class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             tvFromName.text = user.name
             tvMessage.text = user.status
 
-            Picasso.get().load(user.thumbImg)
-                .placeholder(R.drawable.avatar_placeholder)
-                .error(R.drawable.avatar_placeholder)
-                .into(ivProfileImg)
+            if (user.thumbImg.isBlank()) ivProfileImg.setImageResource(R.drawable.avatar_placeholder)
+            else {
+                Picasso.get().load(user.thumbImg)
+                    .placeholder(R.drawable.avatar_placeholder)
+                    .error(R.drawable.avatar_placeholder)
+                    .into(ivProfileImg)
+            }
         }
     }
 }

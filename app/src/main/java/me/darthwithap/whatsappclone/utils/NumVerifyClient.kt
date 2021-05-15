@@ -29,7 +29,7 @@ class NumVerifyClient(private val context: Context) {
 
     fun api(number: String, callback: VolleyCallback) {
         url = "http://apilayer.net/api/validate?access_key=" +
-                context.resources.getString(R.string.num_verify_access_key) +
+                //context.resources.getString(R.string.num_verify_access_key) +
                 "&number=$number&country_code=&format=1"
         Log.d(TAG, "api: $url")
         getResult(callback)

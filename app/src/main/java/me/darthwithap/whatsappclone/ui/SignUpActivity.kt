@@ -116,14 +116,14 @@ class SignUpActivity : BaseActivity() {
             //THE LAST ARGUMENT NEEDS TO BE OF A THUMBNAIL URL OF THE DOWNLOAD IMAGE, THIS IS TO BE DONE
             val user = firebaseAuth.uid?.let { User(it, etName.text.toString(), phNo) }
             if (user != null) {
-                firestoreDatabase.document(firebaseAuth.uid!!).set(user)
-                    .addOnCompleteListener {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }.addOnFailureListener {
-                        Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
-                        pbUploadingToFirebase.visibility = View.GONE
-                    }
+                    firestoreDatabase.document(firebaseAuth.uid!!).set(user)
+                        .addOnCompleteListener {
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        }.addOnFailureListener {
+                            Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                            pbUploadingToFirebase.visibility = View.GONE
+                        }
             }
         }
     }
@@ -152,17 +152,16 @@ class SignUpActivity : BaseActivity() {
                     )
                 }
                 if (user != null) {
-                    firestoreDatabase.document(firebaseAuth.uid!!).set(user)
-                        .addOnCompleteListener {
-                            startActivity(Intent(this, MainActivity::class.java))
-                            finish()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
-                            Log.d(TAG, "uploadImageToFirebase: ${it.localizedMessage}")
-                            pbUploadingToFirebase.visibility = View.GONE
-                            profileImageRef.delete()
-                        }
+                        firestoreDatabase.document(firebaseAuth.uid!!).set(user)
+                            .addOnCompleteListener {
+                                startActivity(Intent(this, MainActivity::class.java))
+                                finish()
+                            }.addOnFailureListener {
+                                Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                                pbUploadingToFirebase.visibility = View.GONE
+                                profileImageRef.delete()
+                            }
+
                 }
             } else {
                 pbUploadingToFirebase.visibility = View.GONE

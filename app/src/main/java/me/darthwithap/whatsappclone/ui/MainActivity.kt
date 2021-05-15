@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import me.darthwithap.whatsappclone.BaseActivity
 import me.darthwithap.whatsappclone.R
@@ -25,12 +26,27 @@ class MainActivity : BaseActivity() {
 
         setSupportActionBar(tbTop)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        //viewPager.adapter = TabWiseSlideAdapter()
-
-        initTabLayoutViews(0)
+        viewPager.adapter = TabWiseSlideAdapter(this)
+        TabLayoutMediator(
+            tlTop, viewPager
+        ) { tab, pos ->
+            when (pos) {
+                0 -> {
+                    tab.text = "Status"
+                }
+                1 -> {
+                    tab.text = "Chats"
+                }
+                2 -> {
+                    tab.text = "Users"
+                }
+            }
+        }.attach()
+        viewPager.currentItem = 1
+        initTabLayoutViews()
     }
 
-    private fun initTabLayoutViews(initTab: Int) {
+    private fun initTabLayoutViews() {
         for (i in 0..tlTop.tabCount) {
             val tab = tlTop.getTabAt(i)
             if (tab != null) {
@@ -40,7 +56,7 @@ class MainActivity : BaseActivity() {
                 tv.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
                 tv.text = tab.text
                 updateUnselectedTabTextAppearance(tv, 0)
-                if (i == initTab) updateSelectedTabTextAppearance(tv)
+                if (i == 1) updateSelectedTabTextAppearance(tv)
             }
         }
         tlTop.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
