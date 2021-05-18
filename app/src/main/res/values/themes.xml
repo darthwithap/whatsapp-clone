@@ -45,4 +45,13 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="ChatBubble">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25dp</item>
+    </style>
+
+    <style name="ChatBubble.SentMessage" >
+        <item name="backgroundColor">@color/dark_age_blue</item>
+    </style>
+
 </resources>
