@@ -1,10 +1,11 @@
-package me.darthwithap.whatsappclone
+package me.darthwithap.whatsappclone.viewholders
 
 import android.graphics.Typeface
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_general.view.*
+import me.darthwithap.whatsappclone.R
 import me.darthwithap.whatsappclone.models.Inbox
 
 class InboxViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

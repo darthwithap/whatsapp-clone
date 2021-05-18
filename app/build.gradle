@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:20.0.4'
     implementation 'com.google.firebase:firebase-firestore-ktx:22.1.2'
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.2'
+    implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -53,4 +54,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.android.volley:volley:1.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
 }

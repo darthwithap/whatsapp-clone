@@ -12,14 +12,12 @@ import androidx.core.widget.addTextChangedListener
 import com.google.android.gms.auth.api.credentials.*
 import kotlinx.android.synthetic.main.activity_login.*
 import me.darthwithap.whatsappclone.BaseActivity
-import me.darthwithap.whatsappclone.utils.NumVerifyClient
 import me.darthwithap.whatsappclone.R
+import me.darthwithap.whatsappclone.utils.CREDENTIAL_PICKER_REQUEST
+import me.darthwithap.whatsappclone.utils.NumVerifyClient
+import me.darthwithap.whatsappclone.utils.PHONE_NUMBER
 
 class LoginActivity : BaseActivity(), NumVerifyClient.VolleyCallback {
-    companion object {
-        private const val PHONE_NUMBER = "phoneNumber"
-        private const val CREDENTIAL_PICKER_REQUEST = 1
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

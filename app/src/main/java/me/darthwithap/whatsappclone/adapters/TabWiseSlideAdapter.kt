@@ -5,6 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import me.darthwithap.whatsappclone.fragments.ChatsFragment
 import me.darthwithap.whatsappclone.fragments.StatusFragment
 import me.darthwithap.whatsappclone.fragments.UsersFragment
+import me.darthwithap.whatsappclone.utils.NUM_PAGES
 
 class TabWiseSlideAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
@@ -17,8 +18,6 @@ class TabWiseSlideAdapter(fragmentActivity: FragmentActivity) :
             else -> UsersFragment()
         }
 
-    companion object {
-        private const val NUM_PAGES = 3
-    }
+
 
 }

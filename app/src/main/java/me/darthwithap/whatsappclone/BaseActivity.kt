@@ -1,10 +1,8 @@
 package me.darthwithap.whatsappclone
 
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 
 open class BaseActivity : AppCompatActivity() {
     fun adjustFontScale(configuration: Configuration) {

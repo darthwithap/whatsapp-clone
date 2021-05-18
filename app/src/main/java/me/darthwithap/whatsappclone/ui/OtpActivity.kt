@@ -11,7 +11,6 @@ import android.os.Looper
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -29,7 +28,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_otp.*
 import me.darthwithap.whatsappclone.BaseActivity
 import me.darthwithap.whatsappclone.R
-import java.lang.StringBuilder
+import me.darthwithap.whatsappclone.utils.PHONE_NUMBER
 import java.util.concurrent.TimeUnit
 
 class OtpActivity : BaseActivity() {
@@ -340,7 +339,6 @@ class OtpActivity : BaseActivity() {
         TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             val text = s.toString()
-            Log.d(TAG, "afterTextChanged: ${text.length}")
             when (currentView.id) {
                 R.id.etNum1 -> if (text.length == 1) nextView?.requestFocus()
                 R.id.etNum2 -> if (text.length == 1) nextView?.requestFocus()
@@ -357,15 +355,12 @@ class OtpActivity : BaseActivity() {
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            Log.d(TAG, "beforeTextChanged: $after")
             if (after > 1) {
                 fillCodeInEditTexts(clipboardText)
             }
         }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            Log.d(TAG, "onTextChanged: s:$s start:$start before:$before count:$count")
-        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
     //[END OtpTextWatcher CLASS]
 
@@ -384,10 +379,5 @@ class OtpActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         countdownTimer
-    }
-
-    companion object {
-        private const val TAG = "OtpActivity"
-        private const val PHONE_NUMBER = "phoneNumber"
     }
 }

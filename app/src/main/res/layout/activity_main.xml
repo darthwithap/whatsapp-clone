@@ -55,9 +55,11 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/bnvBottom"
         android:layout_below="@id/tlTop" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

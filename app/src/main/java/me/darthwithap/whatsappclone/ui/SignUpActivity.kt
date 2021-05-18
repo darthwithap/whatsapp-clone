@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +22,10 @@ import kotlinx.android.synthetic.main.activity_sign_up.*
 import me.darthwithap.whatsappclone.BaseActivity
 import me.darthwithap.whatsappclone.R
 import me.darthwithap.whatsappclone.models.User
+import me.darthwithap.whatsappclone.utils.PHONE_NUMBER
+import me.darthwithap.whatsappclone.utils.PICK_IMAGE_REQUEST_CODE
+import me.darthwithap.whatsappclone.utils.RATIONALE_SHARED_PREF
+import me.darthwithap.whatsappclone.utils.STORAGE_REQUEST_CODE
 
 
 class SignUpActivity : BaseActivity() {
@@ -228,13 +231,5 @@ class SignUpActivity : BaseActivity() {
             return
         }
         exitSnackbar.show()
-    }
-
-    companion object {
-        private const val STORAGE_REQUEST_CODE = 1000
-        private const val PICK_IMAGE_REQUEST_CODE = 1001
-        private const val RATIONALE_SHARED_PREF = "rationale"
-        private const val PHONE_NUMBER = "phoneNumber"
-        private const val TAG = "SignUpActivity"
     }
 }
