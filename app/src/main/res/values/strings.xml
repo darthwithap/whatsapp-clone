@@ -28,4 +28,6 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="today">Today</string>
+    <string name="sample_message">Sample message</string>
+    <string name="call">Call</string>
 </resources>

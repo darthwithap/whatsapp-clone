@@ -2,15 +2,143 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatActivity">
+    tools:context=".ui.ChatActivity">
 
-    <TextView
-        android:id="@+id/tvCentre"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/tbChat"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="16sp" />
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="?attr/homeAsUpIndicator">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivToolbarImg"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ImageView.Rounded" />
+
+        <TextView
+            android:id="@+id/tvToolbarName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/regular_black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/raleway_bold"
+            tools:text="Parth Takkar" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_below="@id/tbChat"
+        android:layout_marginHorizontal="8dp" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshChat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rlInputBox"
+        android:layout_below="@+id/tbChat"
+        android:layout_marginTop="1dp">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChatMsg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="ifContentScrolls"
+            tools:itemCount="20"
+            tools:listitem="@layout/list_item_sent_msg" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlInputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp">
+
+        <ImageView
+            android:id="@+id/ivAddAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_add_attachment" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="2dp"
+            android:layout_toStartOf="@+id/ivSendOrMic"
+            android:layout_toEndOf="@id/ivAddAttachment"
+            android:elevation="0dp"
+            app:cardCornerRadius="14dp"
+            app:strokeColor="@color/light_gray"
+            app:strokeWidth="1dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivEmojiEmoticon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="8dp"
+                    android:src="@drawable/ic_emoji_emoticons" />
+
+                <com.vanniktech.emoji.EmojiEditText
+                    android:id="@+id/eetChatMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/ivEmojiEmoticon"
+                    android:background="@android:color/white"
+                    android:gravity="top|start"
+                    android:hint="Type your message"
+                    android:imeOptions="actionGo"
+                    android:inputType="textMultiLine|textCapSentences|textLongMessage|text"
+                    android:lineSpacingExtra="4dp"
+                    android:maxHeight="80dp"
+                    android:maxLength="500"
+                    android:paddingVertical="8dp"
+                    android:singleLine="false"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageView
+            android:id="@+id/ivSendOrMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_microphone" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

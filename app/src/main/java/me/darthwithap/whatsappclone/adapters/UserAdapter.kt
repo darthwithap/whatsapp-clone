@@ -10,7 +10,7 @@ import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.firebase.ui.firestore.paging.LoadingState
 import com.google.firebase.auth.FirebaseAuth
-import me.darthwithap.whatsappclone.ChatActivity
+import me.darthwithap.whatsappclone.ui.ChatActivity
 import me.darthwithap.whatsappclone.R
 import me.darthwithap.whatsappclone.models.User
 import me.darthwithap.whatsappclone.utils.*
@@ -31,7 +31,7 @@ class UserAdapter(val context: Context, options: FirestorePagingOptions<User>): 
                 UserViewHolder(view)
             }
             else -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.empyt_view, parent, false)
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.empty_view, parent, false)
                 EmptyViewHolder(view)
             }
         }
@@ -56,8 +56,7 @@ class UserAdapter(val context: Context, options: FirestorePagingOptions<User>): 
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)?.toObject(User::class.java)
-        Log.d(TAG, "getItemViewType: ${auth.uid} == ${item!!.uid}")
-        return if (auth.uid == item.uid) EMPTY_VIEW
+        return if (auth.uid == item!!.uid) EMPTY_VIEW
         else NORMAL_VIEW
     }
 

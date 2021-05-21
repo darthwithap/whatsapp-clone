@@ -19,5 +19,7 @@
     <color name="dark_accent_age_blue">#FF262B48</color>
     <color name="light_green">#FF16D173</color>
     <color name="bright_green">#24F389</color>
+    <color name="light_gray">#CC919FAE</color>
+    <color name="just_red">#FF0033</color>
 
 </resources>

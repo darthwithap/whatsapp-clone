@@ -15,13 +15,13 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivProfileImg"
-            android:layout_width="66dp"
-            android:layout_height="66dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:clickable="true"
             android:focusable="true"
-            android:padding="2dp"
+            android:padding="4dp"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/ImageView.Rounded"
             app:srcCompat="@drawable/avatar_placeholder" />

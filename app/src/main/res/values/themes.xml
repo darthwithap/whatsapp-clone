@@ -13,6 +13,8 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/raleway</item>
+        <item name="homeAsUpIndicator">@drawable/ic_back</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
     </style>
 
     <style name="ImageView.Rounded" parent="Theme.WhatsAppClone">
@@ -47,11 +49,15 @@
 
     <style name="ChatBubble">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">25dp</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
     <style name="ChatBubble.SentMessage" >
-        <item name="backgroundColor">@color/dark_age_blue</item>
+        <item name="cornerSizeBottomRight">8dp</item>
+    </style>
+
+    <style name="ChatBubble.ReceivedMessage" >
+        <item name="cornerSizeBottomLeft">8dp</item>
     </style>
 
 </resources>

@@ -17,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsAppClone"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatActivity"></activity>
-        <activity android:name=".TempActivity"></activity>
+        <activity
+            android:name=".ui.ChatActivity"/>
+        <activity android:name=".TempActivity" />
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/Theme.SplashActivity">
